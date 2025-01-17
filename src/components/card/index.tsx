@@ -1,17 +1,16 @@
 "use client";
-
-import { BUSINESSES } from "@/mock-data/businesses";
-import { CHARITIES } from "@/mock-data/charities";
 import { Business, Charity } from "@/types";
-import { useEffect, useState } from "react";
+import { FaPhone } from "react-icons/fa";
+import { FaArrowPointer } from "react-icons/fa6";
+import MapBox from "../map";
 
 type CardProps = {
   children: React.ReactNode;
   className?: string;
 };
 
-type CardWithProviderIdProps = {
-  id: string;
+type EnhancedCardProps = {
+  provider: Business | Charity;
   children: React.ReactNode;
 };
 
@@ -25,32 +24,29 @@ const Card: React.FC<CardProps> = ({ children, className, ...props }) => {
   );
 };
 
-const allBusinessesAndCharities: (Business | Charity)[] =
-  BUSINESSES.concat(CHARITIES);
-
-export const CardWithProviderId: React.FC<CardWithProviderIdProps> = ({
-  id,
+export const EnhancedCard: React.FC<EnhancedCardProps> = ({
+  provider,
   children,
 }) => {
-  const [provider, setProvider] = useState<Business | Charity>();
-
-  useEffect(() => {
-    const _provider = allBusinessesAndCharities.find((p) => p.id === id);
-    setProvider(_provider);
-  }, [id]);
-
-  if (!provider) {
-    console.log("check provider id");
-    return;
-  }
-
   return (
-    <Card className='flex flex-col gap-2'>
+    <Card className='flex flex-col gap-2 justify-between'>
       <div>{children}</div>
-      <div>
-        <p>Provided by: {provider.name}</p>
-        {/* TODO: ADD MAP */}
+      <div>Provided by: {provider.name}</div>
+      <div className='flex align-middle justify-between gap-2'>
+        <span>
+          <FaArrowPointer />
+          {provider.address.postalCode}
+        </span>
+        <span>
+          <FaPhone />
+          {provider.contactPhone}
+        </span>
       </div>
+      <MapBox
+        lat={provider.location.latitude}
+        lng={provider.location.longitude}
+        name={provider.name}
+      />
     </Card>
   );
 };

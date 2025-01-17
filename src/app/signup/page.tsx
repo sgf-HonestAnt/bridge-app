@@ -23,7 +23,7 @@ const SignUpPage = () => {
     localStorage.setItem("user", JSON.stringify(data));
     // Redirect based on role
     if (role !== "individual") {
-      router.push("/signup/verification");
+      router.push("/signup/verification?verify=" + role);
     } else {
       router.push("/dashboard");
     }

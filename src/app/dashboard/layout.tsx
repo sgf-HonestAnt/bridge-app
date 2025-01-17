@@ -2,33 +2,68 @@
 
 import { Button } from "@/components";
 import Tooltip from "@/components/tooltip";
+import {
+  EnhancedBusinessContact,
+  EnhancedCharityContact,
+  Individual,
+} from "@/types";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import {
-  FaBell,
-  FaBox,
-  FaHome,
-  FaQrcode,
-  FaQuestion,
-  FaUser,
-} from "react-icons/fa";
+import { FaBox, FaQrcode, FaQuestion, FaUser } from "react-icons/fa";
 
-const INDIVIDUAL = {
-  id: "3",
-  name: "Alice Johnson",
-  email: "alice.johnson@example.com",
-  verified: true,
+const INDIVIDUAL: Individual = {
+  id: "user_0001",
+  name: "Joe Bloggs",
+  email: "j.bloggs@example.com",
 };
-const BUSINESS = {
-  id: "1",
-  name: "John Doe",
-  email: "john.doe@example.com",
-  verified: true,
+const BUSINESS: EnhancedBusinessContact = {
+  id: "user_3482",
+  name: "Laura Green",
+  email: "laura.green@example.com",
   role: "business",
-  roleId: "B1",
-  location: { lat: 40.7128, lng: -74.006 },
-  openingHrs: "9am-5pm",
+  organizationId: "business_2345",
+  organization: {
+    id: "business_2345",
+    name: "Tech Haven",
+    address: {
+      streetAddress: "22 Park Lane",
+      city: "Cardiff",
+      county: "Cardiff",
+      postalCode: "CF11 9BG",
+    },
+    contactPhone: "+44 2920 333555",
+    verified: true,
+    location: {
+      latitude: 51.54085,
+      longitude: -3.178663,
+    },
+    openingHours: "8:00 AM - 8:00 PM",
+  },
+};
+const CHARITY: EnhancedCharityContact = {
+  id: "user_8612",
+  name: "Sophia Morgan",
+  email: "sophia.morgan@example.com",
+  role: "charity",
+  organizationId: "charity_3456",
+  organization: {
+    id: "charity_3456",
+    name: "Safe Haven Shelter",
+    address: {
+      streetAddress: "30 Cathedral Road",
+      city: "Cardiff",
+      county: "Cardiff",
+      postalCode: "CF11 9LL",
+    },
+    contactPhone: "+44 2920 123789",
+    verified: true,
+    location: {
+      latitude: 51.498207,
+      longitude: -3.183087,
+    },
+    openingHours: "24/7",
+  },
 };
 
 export default function DashboardLayout({
@@ -45,6 +80,7 @@ export default function DashboardLayout({
     const mock = searchParams.get("mock");
     const user = localStorage.getItem("user");
     console.log({ mock, user });
+    // TODO: change signup form to create a 'real' user...
     if (mock === "individual") {
       console.log("setting individual user");
       localStorage.clear();
@@ -53,6 +89,10 @@ export default function DashboardLayout({
       console.log("setting business user");
       localStorage.clear();
       localStorage.setItem("user", JSON.stringify(BUSINESS));
+    } else if (mock === "charity") {
+      console.log("setting charity user");
+      localStorage.clear();
+      localStorage.setItem("user", JSON.stringify(CHARITY));
     }
   }, [searchParams]);
 
@@ -66,11 +106,6 @@ export default function DashboardLayout({
   return (
     <div>
       <div className='flex justify-between items-center'>
-        <Tooltip content='Home'>
-          <Link href={d}>
-            <FaHome />
-          </Link>
-        </Tooltip>
         <Tooltip content='Profile'>
           <Link href={d + "/profile"}>
             <FaUser />
@@ -81,19 +116,14 @@ export default function DashboardLayout({
             <FaQuestion />
           </Link>
         </Tooltip>
-        <Tooltip content='Invite'>
-          <Link href={d + "/invite"}>
-            <FaQrcode />
-          </Link>
-        </Tooltip>
         <Tooltip content='Resources'>
           <Link href={d + "/resources"}>
             <FaBox />
           </Link>
         </Tooltip>
-        <Tooltip content='Notifications'>
-          <Link href={d + "/notifications"}>
-            <FaBell />
+        <Tooltip content='Invite'>
+          <Link href={d + "/invite"}>
+            <FaQrcode />
           </Link>
         </Tooltip>
       </div>

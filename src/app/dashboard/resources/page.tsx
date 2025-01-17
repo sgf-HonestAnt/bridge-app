@@ -1,18 +1,76 @@
+"use client";
+
 import { HeaderFive, HeaderOne } from "@/components";
-import { CardWithProviderId } from "@/components/card";
-import { RESOURCES } from "@/mock-data/resources";
-import React from "react";
+import { EnhancedCard } from "@/components/card";
+import { EnhancedResource } from "@/types";
+import React, { useEffect, useState } from "react";
 
 const ResourcesPage: React.FC = () => {
+  const [resources, setResources] = useState<EnhancedResource[]>([]);
+  const [batches, setBatches] = useState<string[]>();
+  const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const response = await fetch("/mock-data/resources.json");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setResources(data);
+      } catch (error) {
+        console.error("Error fetching resources:", error);
+      }
+    };
+
+    fetchResources();
+  }, []);
+
+  useEffect(() => {
+    const _batches = Array.from(
+      { length: Math.ceil(resources.length / 5) },
+      (_, i) => `${i * 5}-${i * 5 + 4}`
+    );
+    setBatches(_batches);
+  }, [resources]);
+
+  function handleClickBatch(batch: string) {
+    const [start] = batch.split("-").map((n) => parseInt(n));
+    setPage(start);
+  }
+
+  function isBatchSelected(batch: string) {
+    const [start] = batch.split("-").map((n) => parseInt(n));
+    return start === page;
+  }
+
   return (
     <div>
       <HeaderOne>Resources</HeaderOne>
+      <div className='flex align-middle justify-between'>
+        {batches?.map((batch, i) => (
+          <span
+            key={i}
+            onClick={() => handleClickBatch(batch)}
+            className={
+              // if current page is the batch, make it bold
+              isBatchSelected(batch)
+                ? "font-bold text-yellow-400"
+                : "cursor-pointer"
+            }>
+            {"<"}
+            {batch}
+            {">"}
+          </span>
+        ))}
+      </div>
       <div className='grid gap-4 md:grid-cols-2'>
-        {RESOURCES.map((resource) => (
-          <CardWithProviderId key={resource.id} id={resource.providedById}>
+        {resources.slice(page, page + 5).map((resource) => (
+          <EnhancedCard key={resource.id} provider={resource.provider}>
             <HeaderFive>{resource.name}</HeaderFive>
             <p>{resource.description}</p>
-          </CardWithProviderId>
+          </EnhancedCard>
         ))}
       </div>
     </div>

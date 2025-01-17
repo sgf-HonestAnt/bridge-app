@@ -1,12 +1,12 @@
-import React from 'react';
+import { HeaderOne } from "@/components";
 
 const AboutPage = () => {
-    return (
-        <div>
-            <h1>About</h1>
-            <p>Information about the app’s mission and impact.</p>
-        </div>
-    );
+  return (
+    <div>
+      <HeaderOne>About</HeaderOne>
+      <p>Information about the app’s mission and impact.</p>
+    </div>
+  );
 };
 
 export default AboutPage;

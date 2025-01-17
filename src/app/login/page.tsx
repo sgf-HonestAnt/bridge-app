@@ -1,7 +1,9 @@
+import { HeaderOne } from "@/components";
+
 const LoginPage = () => {
   return (
     <div>
-      <h1>Login</h1>
+      <HeaderOne>Login</HeaderOne>
       <p>Allow users to login or sign up</p>{" "}
     </div>
   );

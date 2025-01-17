@@ -1,12 +1,12 @@
-import React from 'react';
+import { HeaderOne } from "@/components";
 
 const NotificationsPage = () => {
-    return (
-        <div>
-            <h1>Notifications</h1>
-            <p>List of real-time alerts about new resources or events.</p>
-        </div>
-    );
+  return (
+    <div>
+      <HeaderOne>Notifications</HeaderOne>
+      <p>List of real-time alerts about new resources or events.</p>
+    </div>
+  );
 };
 
 export default NotificationsPage;

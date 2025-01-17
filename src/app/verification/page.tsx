@@ -1,12 +1,12 @@
-import React from 'react';
+import { HeaderOne } from "@/components";
 
 const VerificationPage = () => {
-    return (
-        <div>
-            <h1>Verification</h1>
-            <p>Submit verification documents (for businesses/charities).</p>
-        </div>
-    );
+  return (
+    <div>
+      <HeaderOne>Verification</HeaderOne>
+      <p>Submit verification documents (for businesses/charities).</p>
+    </div>
+  );
 };
 
 export default VerificationPage;

@@ -1,12 +1,12 @@
-import React from 'react';
+import { HeaderOne } from "@/components";
 
 const DashboardPage = () => {
-    return (
-        <div>
-            <h1>Dashboard</h1>
-            <p>Centralized hub showing relevant features based on user role.</p>
-        </div>
-    );
+  return (
+    <div>
+      <HeaderOne>Dashboard</HeaderOne>
+      <p>Centralized hub showing relevant features based on user role.</p>
+    </div>
+  );
 };
 
 export default DashboardPage;

@@ -1,12 +1,12 @@
-import React from 'react';
+import { HeaderOne } from "@/components";
 
 const PostResourcePage = () => {
-    return (
-        <div>
-            <h1>Post Resource</h1>
-            <p>Page to create new resource entries for businesses and charities.</p>
-        </div>
-    );
+  return (
+    <div>
+      <HeaderOne>Post Resource</HeaderOne>
+      <p>Page to create new resource entries for businesses and charities.</p>
+    </div>
+  );
 };
 
 export default PostResourcePage;

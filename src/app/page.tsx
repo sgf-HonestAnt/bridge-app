@@ -1,4 +1,5 @@
-import { HeaderOne } from "@/components";
+import { Button, HeaderOne } from "@/components";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,16 +11,12 @@ export default function Home() {
         sense of community, renewal, and support.
       </p>
       <div className='w-full flex flex-col justify-between gap-2 sm:flex-row sm:gap-8'>
-        <a
-          className='mt-4 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition'
-          href='/get-involved'>
-          Get Involved
-        </a>
-        <a
-          className='mt-4 px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition'
-          href='/find-help'>
-          Find Help
-        </a>
+        <Link href='/get-involved'>
+          <Button variant='primary'>Get Involved</Button>
+        </Link>
+        <Link href='/find-help'>
+          <Button variant='secondary'>Find Help</Button>
+        </Link>
       </div>
     </>
   );

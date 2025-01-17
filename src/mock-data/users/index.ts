@@ -1,28 +1,4 @@
-type Individual = {
-  id: string;
-  name: string;
-  email: string;
-  verified: boolean;
-};
-
-interface BusinessContact extends Individual {
-  role: "business";
-  roleId: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
-  openingHrs: string;
-}
-
-interface CharityContact extends Individual {
-  role: "charity";
-  roleId: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
-}
+import { BusinessContact, CharityContact, Individual } from "@/types";
 
 type User = Individual | BusinessContact | CharityContact;
 

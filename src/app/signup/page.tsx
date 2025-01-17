@@ -20,7 +20,7 @@ const SignUpPage = () => {
     const data = Object.fromEntries(formData.entries());
     console.log("Form Data:", data);
     // Save form data to local storage
-    localStorage.setItem("signupData", JSON.stringify(data));
+    localStorage.setItem("user", JSON.stringify(data));
     // Redirect based on role
     if (role !== "individual") {
       router.push("/signup/verification");

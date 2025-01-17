@@ -1,15 +1,4 @@
-type Business = {
-  id: string;
-  name: string;
-  address: {
-    firstLine: string;
-    secondLine?: string;
-    city: string;
-    county: string;
-    postcode: string;
-  };
-  contactTel: string;
-};
+import { Business } from "@/types";
 
 export const BUSINESSES: Business[] = [
   {

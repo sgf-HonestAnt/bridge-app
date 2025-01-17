@@ -1,5 +1,6 @@
 interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "danger" | "warning";
+  type?: "button" | "submit" | "reset";
 }
 
 export const Button: React.FC<ButtonProps> = ({ variant, ...props }) => {
@@ -12,6 +13,8 @@ export const Button: React.FC<ButtonProps> = ({ variant, ...props }) => {
       return <Danger {...props} />;
     case "warning":
       return <Warning {...props} />;
+      default:
+        return <Primary {...props} />;
   }
 };
 

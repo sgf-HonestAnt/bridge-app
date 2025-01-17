@@ -14,14 +14,14 @@ const GetInvolvedPage = () => {
         sign up.
       </p>
       <div className='w-full flex flex-col justify-between gap-2 sm:flex-row sm:gap-8'>
-        <Link href='/login?signup=true&type=business'>
-          <Button variant='primary'>Sign up (I am a business)</Button>
+        <Link href='/signup?type=business'>
+          <Button variant='primary'>Sign up my business</Button>
         </Link>
-        <Link href='/login?signup=true&type=charity'>
-          <Button variant='secondary'>Sign up (I am a charity)</Button>
+        <Link href='/signup?type=charity'>
+          <Button variant='secondary'>Sign up my charity</Button>
         </Link>
-        <Link href='/login'>
-          <Button variant='warning'>Login (I already have an account)</Button>
+        <Link href='/dashboard?mock=business'>
+          <Button variant='warning'>I already have an account</Button>
         </Link>
       </div>
     </div>

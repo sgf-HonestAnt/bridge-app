@@ -17,6 +17,9 @@ export default function Home() {
         <Link href='/find-help'>
           <Button variant='secondary'>Find Help</Button>
         </Link>
+        <Link href='/dashboard?mock=business'>
+          <Button variant='warning'>Fast Login</Button>
+        </Link>
       </div>
     </>
   );

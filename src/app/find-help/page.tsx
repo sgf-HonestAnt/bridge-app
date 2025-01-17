@@ -21,11 +21,11 @@ const FindHelpPage = () => {
       </p>
       <p>To get started, sign up:</p>
       <div className='w-full flex flex-col justify-between gap-2 sm:flex-row sm:gap-8'>
-        <Link href='/login?signup=true&type=individual'>
-          <Button variant='primary'>Sign up</Button>
+        <Link href='/signup?type=individual'>
+          <Button variant='primary'>Sign me up</Button>
         </Link>
-        <Link href='/login'>
-          <Button variant='secondary'>Login (I already have an account)</Button>
+        <Link href='/dashboard?mock=individual'>
+          <Button variant='secondary'>I have an account</Button>
         </Link>
       </div>
     </div>

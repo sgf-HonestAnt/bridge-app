@@ -24,7 +24,7 @@ const InvitePage = () => {
   const isCharity = user && "role" in user && user.role === "charity";
 
   return (
-    <div>
+    <div className='flex flex-col gap-5 items-center justify-center min-h-screen'>
       <HeaderOne>
         Invite a {isBusiness ? "business" : isCharity ? "charity" : "friend"}
       </HeaderOne>

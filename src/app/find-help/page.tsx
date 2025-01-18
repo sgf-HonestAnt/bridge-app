@@ -31,7 +31,7 @@ const FindHelpPage = () => {
           <Button variant='primary'>Sign me up</Button>
         </Link>
         <Link href='/dashboard?mock=individual'>
-          <Button variant='secondary'>I have an account</Button>
+          <Button variant='secondary'>Demo Login</Button>
         </Link>
       </div>
     </div>

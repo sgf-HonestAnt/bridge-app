@@ -21,7 +21,7 @@ const GetInvolvedPage = () => {
           <Button variant='secondary'>Sign up my charity</Button>
         </Link>
         <Link href='/dashboard?mock=business'>
-          <Button variant='warning'>I already have an account</Button>
+          <Button variant='warning'>Demo Login</Button>
         </Link>
       </div>
     </div>

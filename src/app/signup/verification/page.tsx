@@ -1,6 +1,6 @@
 "use client";
 
-import VerificationHandler from "@/components/verification";
+import { VerificationHandler } from "@/components";
 import { Suspense } from "react";
 
 const VerificationPage = () => {

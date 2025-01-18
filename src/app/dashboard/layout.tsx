@@ -78,9 +78,6 @@ export default function DashboardLayout({
 
   useEffect(() => {
     const mock = searchParams.get("mock");
-    const user = localStorage.getItem("user");
-    console.log({ mock, user });
-    // TODO: change signup form to create a 'real' user...
     if (mock === "individual") {
       console.log("setting individual user");
       localStorage.clear();

@@ -1,14 +1,27 @@
 "use client";
 
-import { HeaderFive, HeaderOne } from "@/components";
+import { Button, HeaderFive, HeaderOne } from "@/components";
 import { EnhancedCard } from "@/components/card";
-import { EnhancedResource } from "@/types";
+import {
+  EnhancedBusinessContact,
+  EnhancedCharityContact,
+  EnhancedResource,
+} from "@/types";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ResourcesPage: React.FC = () => {
+  const [user, setUser] = useState<
+    EnhancedBusinessContact | EnhancedCharityContact
+  >();
   const [resources, setResources] = useState<EnhancedResource[]>([]);
   const [batches, setBatches] = useState<string[]>();
   const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    const _user = JSON.parse(localStorage.getItem("user") ?? "{}");
+    setUser(_user);
+  }, []);
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -48,6 +61,11 @@ const ResourcesPage: React.FC = () => {
   return (
     <div>
       <HeaderOne>Resources</HeaderOne>
+      {user?.organization.verified && (
+        <Button variant='warning'>
+          <Link href='/dashboard/resources/post'>Post a new resource</Link>
+        </Button>
+      )}
       <div className='flex align-middle justify-between'>
         {batches?.map((batch, i) => (
           <span

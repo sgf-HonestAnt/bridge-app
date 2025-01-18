@@ -2,54 +2,28 @@
 
 import { HeaderOne } from "@/components";
 import Card from "@/components/card";
-import { Business, Charity, User } from "@/types";
+import { EnhancedBusinessContact, EnhancedCharityContact } from "@/types";
 import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState<User>();
-  const [business, setBusiness] = useState<Business>();
-  const [charity, setCharity] = useState<Charity>();
+  const [user, setUser] = useState<
+    EnhancedBusinessContact | EnhancedCharityContact
+  >();
+
+  const [detail, setDetail] = useState<string | null>();
 
   useEffect(() => {
     const _user = JSON.parse(localStorage.getItem("user") ?? "{}");
     setUser(_user);
-    const { role } = _user;
-    if (role === "business") {
-      setBusiness({
-        id: "business_7890",
-        name: "Greenfield Farms",
-        address: {
-          streetAddress: "10 Market Street",
-          city: "Cardiff",
-          county: "Cardiff",
-          postalCode: "CF11 3ZR",
-        },
-        contactPhone: "+44 2920 987654",
-        verified: true,
-        location: {
-          latitude: 51.516807,
-          longitude: -3.127014,
-        },
-        openingHours: "7:00 AM - 5:00 PM",
-      });
-    } else if (role === "charity") {
-      setCharity({
-        id: "charity_3456",
-        name: "Safe Haven Shelter",
-        address: {
-          streetAddress: "30 Cathedral Road",
-          city: "Cardiff",
-          county: "Cardiff",
-          postalCode: "CF11 9LL",
-        },
-        contactPhone: "+44 2920 123789",
-        verified: true,
-        location: {
-          latitude: 51.498207,
-          longitude: -3.183087,
-        },
-        openingHours: "24/7",
-      });
+
+    if (_user.role === "business") {
+      const category = localStorage.getItem("category");
+      setDetail(category);
+    }
+
+    if (_user.role === "charity") {
+      const cause = localStorage.getItem("cause");
+      setDetail(cause);
     }
   }, []);
 
@@ -65,49 +39,33 @@ const ProfilePage = () => {
           <p>
             <strong>Email:</strong> {user.email}
           </p>
-          {/* {user.role !== "individual" && (
-            <div className='flex items-center gap-2'>
-              <strong>Role:</strong>
-              {user.verified && (
-                <Tooltip content='verified'>
-                  <FaCertificate className='text-orange-500' />
-                </Tooltip>
-              )}
-              {user.role} contact
-              {!user.verified && (
-                <>
-                  <Button variant='danger'>Not yet verified</Button>
-                  <Tooltip content='Why?'>
-                    <FaQuestionCircle />
-                  </Tooltip>
-                </>
-              )}
-            </div>
-          )} */}
-          {business && (
+          {user.organization && (
             <>
-              <strong>Business Details:</strong>
+              <p>
+                <strong>
+                  {user.role.slice(0, 1).toUpperCase()}
+                  {user.role.slice(1)} address:
+                </strong>
+              </p>
               <ul className='ml-2'>
-                <li>{business.name}</li>
-                <li>{business.contactPhone}</li>
-                <li>{business.address.streetAddress}</li>
-                <li>{business.address.addressLine2}</li>
-                <li>{business.address.city}</li>
-                <li>{business.address.postalCode}</li>
+                <li>{user.organization.name}</li>
+                <li>{user.organization.contactPhone}</li>
+                <li>{user.organization.address.streetAddress}</li>
+                <li>{user.organization.address.addressLine2}</li>
+                <li>{user.organization.address.city}</li>
+                <li>{user.organization.address.postalCode}</li>
               </ul>
-            </>
-          )}
-          {charity && (
-            <>
-              <strong>Charity Details:</strong>
-              <ul className='ml-2'>
-                <li>{charity.name}</li>
-                <li>{charity.contactPhone}</li>
-                <li>{charity.address.streetAddress}</li>
-                <li>{charity.address.addressLine2}</li>
-                <li>{charity.address.city}</li>
-                <li>{charity.address.postalCode}</li>
-              </ul>
+              <p>
+                <strong>Telephone number:</strong>{" "}
+                {user.organization.contactPhone ?? "not known"}
+              </p>
+              <p>
+                <strong>Cause or category:</strong> {detail ?? "not known"}
+              </p>
+              <p>
+                <strong>Verified:</strong>{" "}
+                {user.organization.verified ? "yes" : "no"}
+              </p>
             </>
           )}
         </Card>

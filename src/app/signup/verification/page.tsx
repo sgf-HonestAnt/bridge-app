@@ -19,7 +19,7 @@ const VerificationPage = () => {
   return (
     <div>
       <HeaderOne>Verification</HeaderOne>
-      <p>Submit verification documents (for businesses/charities).</p>
+      <p>On this page, an MVP would allow us to submit verification documents (for businesses/charities). Prepare to reload in five, four...</p>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import { HeaderOne } from "@/components";
 
 const PostResourcePage = () => {
+  // here we will use a form to 'post' a new resource (actually save it in localstorage)
+  // resources will then add localStorage resources to the beginning of the resources array
   return (
     <div>
       <HeaderOne>Post Resource</HeaderOne>

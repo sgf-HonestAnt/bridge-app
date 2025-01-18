@@ -2,77 +2,62 @@
 
 import { Button, HeaderFive, HeaderOne } from "@/components";
 import { EnhancedCard } from "@/components/card";
+import { usePagination } from "@/hooks/pagination";
 import {
   EnhancedBusinessContact,
   EnhancedCharityContact,
   EnhancedResource,
+  Individual,
 } from "@/types";
+import { fetchResources } from "@/utils/fetchResources";
+import { getUserFromLocalStorage } from "@/utils/localStorage";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ResourcesPage: React.FC = () => {
   const [user, setUser] = useState<
-    EnhancedBusinessContact | EnhancedCharityContact
+    Individual | EnhancedBusinessContact | EnhancedCharityContact
   >();
-  const [resources, setResources] = useState<EnhancedResource[]>([]);
-  const [batches, setBatches] = useState<string[]>();
-  const [page, setPage] = useState(0);
+  const [resources, setResources] = useState<EnhancedResource[] | undefined>(
+    []
+  );
 
   useEffect(() => {
-    const _user = JSON.parse(localStorage.getItem("user") ?? "{}");
+    const _user = getUserFromLocalStorage();
     setUser(_user);
   }, []);
 
   useEffect(() => {
-    const fetchResources = async () => {
-      try {
-        const response = await fetch("/mock-data/resources.json");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setResources(data);
-      } catch (error) {
-        console.error("Error fetching resources:", error);
-      }
+    const fetch = async () => {
+      const _resources = await fetchResources();
+      setResources(_resources);
     };
 
-    fetchResources();
+    fetch();
   }, []);
 
-  useEffect(() => {
-    const _batches = Array.from(
-      { length: Math.ceil(resources.length / 5) },
-      (_, i) => `${i * 5}-${i * 5 + 4}`
-    );
-    setBatches(_batches);
-  }, [resources]);
-
-  function handleClickBatch(batch: string) {
-    const [start] = batch.split("-").map((n) => parseInt(n));
-    setPage(start);
-  }
-
-  function isBatchSelected(batch: string) {
-    const [start] = batch.split("-").map((n) => parseInt(n));
-    return start === page;
-  }
+  // Use pagination hook
+  const { paginatedItems, batches, handleClickBatch, isBatchSelected } =
+    usePagination(resources || [], 5);
 
   return (
     <div>
       <HeaderOne>Resources</HeaderOne>
-      {user?.organization.verified && (
-        <Button variant='warning'>
-          <Link href='/dashboard/resources/post'>Post a new resource</Link>
-        </Button>
-      )}
+      {user && <h2>Welcome, {user.name}</h2>}
+      {
+        // @ts-expect-error: to fix
+        user?.organization?.verified && (
+          <Button variant='tertiary'>
+            <Link href='/dashboard/resources/post'>Post a new resource</Link>
+          </Button>
+        )
+      }
       <div className='flex align-middle justify-between'>
-        {batches?.map((batch, i) => (
+        {batches.map((batch) => (
           <span
-            key={i}
+            key={batch}
             onClick={() => handleClickBatch(batch)}
             className={
-              // if current page is the batch, make it bold
               isBatchSelected(batch)
                 ? "font-bold text-yellow-400"
                 : "cursor-pointer"
@@ -83,12 +68,16 @@ const ResourcesPage: React.FC = () => {
           </span>
         ))}
       </div>
-      <div className='grid gap-4 md:grid-cols-2'>
-        {resources.slice(page, page + 5).map((resource) => (
-          <EnhancedCard key={resource.id} provider={resource.provider}>
-            <HeaderFive>{resource.name}</HeaderFive>
-            <p>{resource.description}</p>
-          </EnhancedCard>
+      <div className='grid gap-4'>
+        {paginatedItems.map((resource) => (
+          <Link href={"/dashboard/resources/" + resource.id} key={resource.id}>
+            <EnhancedCard
+              provider={resource.provider}
+              isOwner={user?.id === resource.createdByUserId}>
+              <HeaderFive>{resource.name}</HeaderFive>
+              <p>{resource.description}</p>
+            </EnhancedCard>
+          </Link>
         ))}
       </div>
     </div>

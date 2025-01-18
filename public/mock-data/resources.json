@@ -1,5 +1,35 @@
 [
   {
+    "id": "res_cwbeuhcveiurhv",
+    "name": "Free Wi-Fi and Charging",
+    "description": "Free Wi-Fi and charging points available throughout the building.",
+    "category": "services",
+    "createdByUserId": "user_3482",
+    "providerId": "business_2345",
+    "creator": {
+      "id": "user_3482",
+      "name": "Laura Green",
+      "email": "laura.green@example.com"
+    },
+    "provider": {
+      "id": "business_2345",
+      "name": "Tech Haven",
+      "address": {
+        "streetAddress": "22 Park Lane",
+        "city": "Cardiff",
+        "county": "Cardiff",
+        "postalCode": "CF11 9BG"
+      },
+      "contactPhone": "+44 2920 333555",
+      "verified": true,
+      "location": {
+        "latitude": 51.54085,
+        "longitude": -3.178663
+      },
+      "openingHours": "8:00 AM - 8:00 PM"
+    }
+  },
+  {
     "id": "res_1467",
     "name": "Warm Meals Service",
     "description": "Daily free warm meals provided to those in need.",

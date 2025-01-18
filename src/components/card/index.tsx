@@ -1,8 +1,9 @@
 "use client";
 import { Business, Charity } from "@/types";
-import { FaPhone } from "react-icons/fa";
+import { FaPhone, FaStar } from "react-icons/fa";
 import { FaArrowPointer } from "react-icons/fa6";
-import MapBox from "../map";
+import { Button } from "../button";
+import Tooltip from "../tooltip";
 
 type CardProps = {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ type CardProps = {
 
 type EnhancedCardProps = {
   provider: Business | Charity;
+  isOwner: boolean;
   children: React.ReactNode;
 };
 
@@ -26,11 +28,21 @@ const Card: React.FC<CardProps> = ({ children, className, ...props }) => {
 
 export const EnhancedCard: React.FC<EnhancedCardProps> = ({
   provider,
+  isOwner,
   children,
 }) => {
   return (
     <Card className='flex flex-col gap-2 justify-between'>
-      <div>{children}</div>
+      <div className='relative'>
+        {isOwner && (
+          <div className='absolute right-2 top-2'>
+            <Tooltip content='You created this resource'>
+              <FaStar className="text-green-600" />
+            </Tooltip>
+          </div>
+        )}
+        {children}
+      </div>
       <div>Provided by: {provider.name}</div>
       <div className='flex align-middle justify-between gap-2'>
         <span>
@@ -42,11 +54,7 @@ export const EnhancedCard: React.FC<EnhancedCardProps> = ({
           {provider.contactPhone}
         </span>
       </div>
-      <MapBox
-        lat={provider.location.latitude}
-        lng={provider.location.longitude}
-        name={provider.name}
-      />
+      <Button variant='warning'>Show map and full details</Button>
     </Card>
   );
 };
